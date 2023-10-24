@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  * Clase que gestiona los libros y los prestamos
  */
@@ -86,13 +88,24 @@ public class GestorBiblioteca {
 		}
 	}
 
-	/**
-	 * Método de prueba para mostrar los libros por consola
-	 */
-	public void mostrarLibros() {
+	public DefaultTableModel buscarLibro(String busqueda) {
+
+		String[] columnas = { "Título", "Autor", "ISBN", "Disponible" };
+		DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
 		for (Libro libro : libros) {
-			System.out.println(libro);
+			if (libro.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
+					|| libro.getAutor().toLowerCase().contains(busqueda.toLowerCase())
+					|| libro.getIsbn().toLowerCase().contains(busqueda.toLowerCase())) {
+
+				String[] fila = { libro.getTitulo(), libro.getAutor(), libro.getIsbn(),
+						libro.isDisponible() ? "Sí" : "No" };
+				modelo.addRow(fila);
+
+			}
 		}
+
+		return modelo;
 	}
 
 }

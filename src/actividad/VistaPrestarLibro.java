@@ -9,6 +9,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaPrestarLibro extends JFrame {
 
@@ -38,13 +40,7 @@ public class VistaPrestarLibro extends JFrame {
 		contentPane.add(scrollPane);
 		
 		tblResultados = new JTable();
-		tblResultados.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Título", "Autor", "ISBN", "Disponible"
-			}
-		));
+		
 		scrollPane.setViewportView(tblResultados);
 		
 		txtBuscar = new JTextField();
@@ -55,6 +51,12 @@ public class VistaPrestarLibro extends JFrame {
 		ImageIcon icoLupa = new ImageIcon("src/actividad/lupaEscaladaPequena.png");
 		
 		btnBuscar = new JButton(icoLupa);
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tblResultados.setModel(gb.buscarLibro(txtBuscar.getText()));
+				txtBuscar.setText(null);
+			}
+		});
 		btnBuscar.setBounds(393, 27, 33, 30);
 		contentPane.add(btnBuscar);
 	}
