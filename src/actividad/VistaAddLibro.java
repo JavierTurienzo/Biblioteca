@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class VistaAddLibro extends JFrame {
@@ -38,6 +39,12 @@ public class VistaAddLibro extends JFrame {
 		this.controlador = controlador;
 		this.gb = gb;
 		
+		try {
+		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,34 +56,34 @@ public class VistaAddLibro extends JFrame {
 		lblTitulo = new JLabel("Título");
 		lblTitulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitulo.setBounds(51, 77, 73, 24);
+		lblTitulo.setBounds(53, 66, 73, 24);
 		contentPane.add(lblTitulo);
 
 		lblAutor = new JLabel("Autor");
 		lblAutor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAutor.setBounds(51, 111, 73, 24);
+		lblAutor.setBounds(53, 110, 73, 24);
 		contentPane.add(lblAutor);
 
 		lblIsbn = new JLabel("ISBN");
 		lblIsbn.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblIsbn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblIsbn.setBounds(51, 145, 73, 24);
+		lblIsbn.setBounds(53, 152, 73, 24);
 		contentPane.add(lblIsbn);
 
 		txtTitulo = new JTextField();
-		txtTitulo.setBounds(134, 82, 204, 19);
+		txtTitulo.setBounds(136, 66, 204, 30);
 		contentPane.add(txtTitulo);
 		txtTitulo.setColumns(10);
 
 		txtAutor = new JTextField();
 		txtAutor.setColumns(10);
-		txtAutor.setBounds(134, 116, 204, 19);
+		txtAutor.setBounds(136, 110, 204, 30);
 		contentPane.add(txtAutor);
 
 		txtIsbn = new JTextField();
 		txtIsbn.setColumns(10);
-		txtIsbn.setBounds(134, 150, 204, 19);
+		txtIsbn.setBounds(136, 152, 204, 30);
 		contentPane.add(txtIsbn);
 
 		btnAdd = new JButton("Añadir");

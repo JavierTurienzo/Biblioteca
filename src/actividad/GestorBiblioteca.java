@@ -38,15 +38,21 @@ public class GestorBiblioteca {
 	 * @param usuario - El usuario que pide el prestamo
 	 * @return 0 si el prestamo es correcto, -1 si el libro no esta disponible
 	 */
-	public int prestarLibro(Libro libro, String usuario) {
+	public void prestarLibro(Libro libro, String usuario) {
 		if (libro.isDisponible()) {
 			prestamos.add(new Prestamo(usuario, libro, idPrestamos));
 			libro.setDisponible(false);
 			idPrestamos++;
-			return 0;
-		} else {
-			return -1;
-		}
+		} 
+	}
+	
+	/**
+	 * Guarda los prestamos en el fichero
+	 * @param libro
+	 * @param usuario
+	 */
+	private void guardarPrestamos(Libro libro, String usuario) {
+		
 	}
 
 	/**
@@ -88,10 +94,22 @@ public class GestorBiblioteca {
 		}
 	}
 
+	/**
+	 * Busca los libros que coinciden con el parametro busqueda
+	 * 
+	 * @param busqueda - El string con el que busca los libros
+	 * @return Un DefaultTableModel con los datos de los libros que coinciden
+	 */
 	public DefaultTableModel buscarLibro(String busqueda) {
 
 		String[] columnas = { "Título", "Autor", "ISBN", "Disponible" };
-		DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+		DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// Las celdas no son editables
+				return false;
+			}
+		};
 
 		for (Libro libro : libros) {
 			if (libro.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
@@ -100,6 +118,7 @@ public class GestorBiblioteca {
 
 				String[] fila = { libro.getTitulo(), libro.getAutor(), libro.getIsbn(),
 						libro.isDisponible() ? "Sí" : "No" };
+
 				modelo.addRow(fila);
 
 			}
