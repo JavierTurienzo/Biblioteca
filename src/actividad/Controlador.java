@@ -10,6 +10,7 @@ public class Controlador {
 	public void inicializar() {
 
 		gb.cargarLibros();
+		gb.cargarPrestamos();
 		
 		PaginaPrincipal paginaPrincipal = new PaginaPrincipal(this);
 		VistaAddLibro vistaAddLibro = new VistaAddLibro(this, gb);

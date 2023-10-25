@@ -8,8 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import javax.swing.table.DefaultTableModel;
-
 /**
  * Clase que gestiona los libros y los prestamos
  */
@@ -18,7 +16,6 @@ public class GestorBiblioteca {
 	private ArrayList<Libro> libros = new ArrayList<Libro>();
 	private ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
 	private ArrayList<Prestamo> historial = new ArrayList<Prestamo>();
-	private static int idPrestamos;
 
 	/**
 	 * Añade un libro al regsitro de libros
@@ -28,6 +25,7 @@ public class GestorBiblioteca {
 	public void addLibro(Libro libro) {
 		if (!libros.contains(libro)) {
 			libros.add(libro);
+			guardarLibros();
 		}
 	}
 
@@ -36,29 +34,54 @@ public class GestorBiblioteca {
 	 * 
 	 * @param libro   - El libro para prestar
 	 * @param usuario - El usuario que pide el prestamo
-	 * @return 0 si el prestamo es correcto, -1 si el libro no esta disponible
 	 */
-	public void prestarLibro(Libro libro, String usuario) {
-		if (libro.isDisponible()) {
-			prestamos.add(new Prestamo(usuario, libro, idPrestamos));
-			libro.setDisponible(false);
-			idPrestamos++;
-		} 
+	public void prestarLibro(String usuario, Libro libro) {
+		prestamos.add(new Prestamo(usuario, libro));
+		guardarPrestamos();
 	}
-	
+
 	/**
 	 * Guarda los prestamos en el fichero
+	 * 
 	 * @param libro
 	 * @param usuario
 	 */
-	private void guardarPrestamos(Libro libro, String usuario) {
-		
+	private void guardarPrestamos() {
+
+		try {
+			ObjectOutputStream guarda = new ObjectOutputStream(new FileOutputStream("Prestamos.dat"));
+			guarda.writeObject(prestamos);
+			guarda.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void cargarPrestamos() {
+		try {
+			ObjectInputStream carga = new ObjectInputStream(new FileInputStream("Libros.dat"));
+			ArrayList<Prestamo> prestamosCargados = (ArrayList<Prestamo>) carga.readObject();
+			for (Prestamo prestamo : prestamosCargados) {
+					prestamos.add(prestamo);
+			}
+
+			carga.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha creado el archivo Libros.dat porque no exisitía previamente");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Actualiza el fichero con los libros guardados en la biblioteca
 	 */
-	public void guardarLibros() {
+	private void guardarLibros() {
 		try {
 			ObjectOutputStream guarda = new ObjectOutputStream(new FileOutputStream("Libros.dat"));
 			guarda.writeObject(libros);
@@ -100,31 +123,30 @@ public class GestorBiblioteca {
 	 * @param busqueda - El string con el que busca los libros
 	 * @return Un DefaultTableModel con los datos de los libros que coinciden
 	 */
-	public DefaultTableModel buscarLibro(String busqueda) {
+	public ArrayList<Libro> buscarLibro(String busqueda) {
 
-		String[] columnas = { "Título", "Autor", "ISBN", "Disponible" };
-		DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				// Las celdas no son editables
-				return false;
-			}
-		};
+		ArrayList<Libro> resultados = new ArrayList<Libro>();
 
 		for (Libro libro : libros) {
 			if (libro.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
 					|| libro.getAutor().toLowerCase().contains(busqueda.toLowerCase())
 					|| libro.getIsbn().toLowerCase().contains(busqueda.toLowerCase())) {
 
-				String[] fila = { libro.getTitulo(), libro.getAutor(), libro.getIsbn(),
-						libro.isDisponible() ? "Sí" : "No" };
-
-				modelo.addRow(fila);
+				resultados.add(libro);
 
 			}
 		}
 
-		return modelo;
+		return resultados;
+	}
+
+	public boolean estaDisponible(String isbn) {
+		for (Libro libro : libros) {
+			if (libro.getIsbn().equals(isbn) && libro.isDisponible()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

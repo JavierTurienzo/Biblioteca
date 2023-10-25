@@ -47,6 +47,7 @@ public class VistaAddLibro extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setSize(960, 540);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -56,34 +57,34 @@ public class VistaAddLibro extends JFrame {
 		lblTitulo = new JLabel("Título");
 		lblTitulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitulo.setBounds(53, 66, 73, 24);
+		lblTitulo.setBounds(286, 171, 73, 24);
 		contentPane.add(lblTitulo);
 
 		lblAutor = new JLabel("Autor");
 		lblAutor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAutor.setBounds(53, 110, 73, 24);
+		lblAutor.setBounds(286, 215, 73, 24);
 		contentPane.add(lblAutor);
 
 		lblIsbn = new JLabel("ISBN");
 		lblIsbn.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblIsbn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblIsbn.setBounds(53, 152, 73, 24);
+		lblIsbn.setBounds(286, 257, 73, 24);
 		contentPane.add(lblIsbn);
 
 		txtTitulo = new JTextField();
-		txtTitulo.setBounds(136, 66, 204, 30);
+		txtTitulo.setBounds(369, 171, 204, 30);
 		contentPane.add(txtTitulo);
 		txtTitulo.setColumns(10);
 
 		txtAutor = new JTextField();
 		txtAutor.setColumns(10);
-		txtAutor.setBounds(136, 110, 204, 30);
+		txtAutor.setBounds(369, 215, 204, 30);
 		contentPane.add(txtAutor);
 
 		txtIsbn = new JTextField();
 		txtIsbn.setColumns(10);
-		txtIsbn.setBounds(136, 152, 204, 30);
+		txtIsbn.setBounds(369, 257, 204, 30);
 		contentPane.add(txtIsbn);
 
 		btnAdd = new JButton("Añadir");
@@ -95,21 +96,20 @@ public class VistaAddLibro extends JFrame {
 					lblResultado.setText("Faltan campos por rellenar");
 				} else {
 					gb.addLibro(new Libro(txtTitulo.getText(), txtAutor.getText(), txtIsbn.getText()));
-					gb.guardarLibros();
 					txtTitulo.setText("");
 					txtAutor.setText("");
 					txtIsbn.setText("");
-					lblResultado.setForeground(new Color(0,255,0));
+					lblResultado.setForeground(new Color(0,185,0));
 					lblResultado.setText("Libro añadido correctamente");
 				}
 			}
 		});
-		btnAdd.setBounds(341, 232, 85, 21);
+		btnAdd.setBounds(497, 329, 85, 21);
 		contentPane.add(btnAdd);
 
 		lblResultado = new JLabel("");
 		lblResultado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblResultado.setBounds(134, 232, 183, 17);
+		lblResultado.setBounds(379, 371, 183, 17);
 		contentPane.add(lblResultado);
 		
 		btnVolver = new JButton("Volver");
@@ -120,7 +120,7 @@ public class VistaAddLibro extends JFrame {
 				
 			}
 		});
-		btnVolver.setBounds(10, 232, 85, 21);
+		btnVolver.setBounds(353, 329, 85, 21);
 		contentPane.add(btnVolver);
 	}
 
