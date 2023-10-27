@@ -31,12 +31,68 @@ La clase `GestorBiblioteca` se encarga de gestionar la colección de libros y lo
 
 ## Clase `Libro`
 
-La clase `Libro` representa un libro en la biblioteca. Contiene información sobre el título, autor, ISBN y disponibilidad del libro.
+La clase `Libro` representa un libro en la biblioteca. Cada instancia de esta clase contiene información sobre el título, autor, ISBN y disponibilidad del libro.
+
+### Atributos
+
+- `titulo` (tipo `String`): El título del libro.
+- `autor` (tipo `String`): El autor del libro.
+- `isbn` (tipo `String`): El ISBN del libro, que sirve como identificador único.
+- `disponible` (tipo `boolean`): Indica si el libro está disponible para préstamo.
+
+### Constructor
+
+- `Libro(String titulo, String autor, String isbn)`: Este constructor se utiliza para crear un nuevo libro. Toma el título, autor e ISBN como parámetros y establece inicialmente el libro como disponible.
 
 ### Métodos Públicos
 
-- `equals(Object obj)`: Compara si dos libros son iguales basándose en el ISBN.
-- `toString()`: Retorna una representación en cadena del libro.
+- `getTitulo()`: Retorna el título del libro.
+- `setTitulo(String titulo)`: Permite establecer el título del libro.
+- `getAutor()`: Retorna el autor del libro.
+- `setAutor(String autor)`: Permite establecer el autor del libro.
+- `getIsbn()`: Retorna el ISBN del libro.
+- `setIsbn(String isbn)`: Permite establecer el ISBN del libro.
+- `isDisponible()`: Verifica si el libro está disponible. Retorna `true` si el libro está disponible y `false` si no lo está.
+- `setDisponible(boolean disponible)`: Permite establecer la disponibilidad del libro.
+- `equals(Object obj)`: Compara si dos libros son iguales basándose en el ISBN. Retorna `true` si los libros tienen el mismo ISBN y `false` en caso contrario.
+
+### Notas Adicionales
+
+- El ISBN se utiliza como un identificador único para cada libro en la biblioteca.
+- La disponibilidad del libro se puede cambiar con el método `setDisponible`.
+
+La clase `Libro` es esencial para mantener un registro de los libros en la biblioteca, lo que facilita la gestión de préstamos y la disponibilidad de los libros para los usuarios.
+
+## Clase `Prestamo`
+
+La clase `Prestamo` representa un préstamo de un libro en la biblioteca. Cada instancia de esta clase contiene información sobre el usuario que realizó el préstamo, el libro prestado y las fechas de inicio y finalización del préstamo. Además, registra si el libro ha sido devuelto.
+
+### Atributos
+
+- `usuario` (tipo `String`): El nombre del usuario que pidió el préstamo.
+- `libro` (tipo `Libro`): El libro prestado.
+- `fechaIni` (tipo `LocalDate`): La fecha de inicio del préstamo.
+- `fechaFin` (tipo `LocalDate`): La fecha de finalización del préstamo.
+- `devuelto` (tipo `boolean`): Indica si el libro ha sido devuelto.
+
+### Constructor
+
+- `Prestamo(String usuario, Libro libro)`: Este constructor se utiliza para crear un nuevo préstamo. Toma el nombre del usuario y el libro prestado como parámetros, establece la fecha de inicio como la fecha actual y calcula automáticamente la fecha de finalización a 15 días a partir de la fecha de inicio. Inicialmente, el préstamo se registra como no devuelto.
+
+### Métodos Públicos
+
+- `getUsuario()`: Retorna el nombre del usuario que realizó el préstamo.
+- `getLibro()`: Retorna el libro prestado en este préstamo.
+- `getFechaIni()`: Retorna la fecha de inicio del préstamo.
+- `getFechaFin()`: Retorna la fecha de finalización del préstamo.
+- `setFechaFin(LocalDate fechaFin)`: Permite establecer la fecha de finalización del préstamo.
+- `isDevuelto()`: Verifica si el libro ha sido devuelto. Retorna `true` si el libro ha sido devuelto y `false` en caso contrario.
+- `setDevuelto(boolean devuelto)`: Permite establecer si el libro ha sido devuelto o no.
+
+### Notas Adicionales
+
+- Un préstamo se inicia con la fecha de inicio actual y se establece una fecha de finalización predeterminada de 15 días a partir de la fecha de inicio.
+- El estado de devolución del libro se puede cambiar con el método `setDevuelto`.
 
 ## Clase `PaginaPrincipal`
 
