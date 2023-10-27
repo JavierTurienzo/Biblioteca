@@ -14,6 +14,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Clase que representa la vista para añadir un libro en la aplicación.
+ */
 public class VistaAddLibro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -32,19 +35,23 @@ public class VistaAddLibro extends JFrame {
 	private JButton btnVolver;
 
 	/**
-	 * Create the frame.
+	 * Crea la vista para añadir un libro.
+	 *
+	 * @param controlador - El controlador que gestionará las acciones en esta
+	 *                    vista.
+	 * @param gb          - El gestor de la biblioteca para añadir libros.
 	 */
 	public VistaAddLibro(Controlador controlador, GestorBiblioteca gb) {
-		
+
 		this.controlador = controlador;
 		this.gb = gb;
-		
+
 		try {
-		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(960, 540);
@@ -90,16 +97,16 @@ public class VistaAddLibro extends JFrame {
 		btnAdd = new JButton("Añadir");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (txtAutor.getText().equals("") || txtTitulo.getText().equals("") || txtIsbn.getText().equals("")) {
-					lblResultado.setForeground(new Color(255,0,0));
+					lblResultado.setForeground(new Color(255, 0, 0));
 					lblResultado.setText("Faltan campos por rellenar");
 				} else {
 					gb.addLibro(new Libro(txtTitulo.getText(), txtAutor.getText(), txtIsbn.getText()));
 					txtTitulo.setText("");
 					txtAutor.setText("");
 					txtIsbn.setText("");
-					lblResultado.setForeground(new Color(0,185,0));
+					lblResultado.setForeground(new Color(0, 185, 0));
 					lblResultado.setText("Libro añadido correctamente");
 				}
 			}
@@ -111,23 +118,31 @@ public class VistaAddLibro extends JFrame {
 		lblResultado.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblResultado.setBounds(379, 371, 183, 17);
 		contentPane.add(lblResultado);
-		
+
 		btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				controlador.cambiarVista(1, 0);
-				
 			}
 		});
 		btnVolver.setBounds(353, 329, 85, 21);
 		contentPane.add(btnVolver);
 	}
 
+	/**
+	 * Establece el controlador para esta vista.
+	 *
+	 * @param controlador - El controlador a establecer.
+	 */
 	public void setControlador(Controlador controlador) {
 		this.controlador = controlador;
 	}
-	
+
+	/**
+	 * Establece el gestor de la biblioteca para esta vista.
+	 *
+	 * @param gb - El gestor de la biblioteca a establecer.
+	 */
 	public void setGb(GestorBiblioteca gb) {
 		this.gb = gb;
 	}

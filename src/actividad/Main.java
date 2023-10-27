@@ -1,5 +1,8 @@
 package actividad;
 
+/**
+ * Clase principal que inicia la aplicación.
+ */
 public class Main {
 	public static void main(String[] args) {
 		// Modelo
@@ -8,7 +11,7 @@ public class Main {
 		// Controlador
 		Controlador controlador = new Controlador();
 		controlador.setGb(gb); // El controlador necesita acceder al modelo
-		
+
 		// Arrancar el controlador
 		controlador.inicializar();
 	}
